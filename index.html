@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twitter Mini Composer</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  padding:20px;
+  font-family:Arial,sans-serif;
+  background:#15202b;
+  color:white;
+}
+.container{
+  max-width:600px;
+  margin:30px auto;
+  background:#192734;
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 4px 18px #0005;
+}
+h1{color:#1d9bf0;font-size:27px}
+p{color:#aab8c2}
+textarea{
+  width:100%;
+  min-height:180px;
+  padding:15px;
+  border-radius:12px;
+  border:1px solid #38444d;
+  background:#15202b;
+  color:white;
+  font-size:17px;
+  resize:vertical;
+}
+.counter{
+  text-align:right;
+  color:#aab8c2;
+  margin:12px 0;
+}
+button{
+  border:0;
+  border-radius:25px;
+  padding:12px 20px;
+  margin:5px 3px 5px 0;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.primary{background:#1d9bf0;color:white}
+.secondary{background:#38444d;color:white}
+#message{color:#00d084;margin-top:12px}
+.preview{
+  border-top:1px solid #38444d;
+  margin-top:22px;
+  padding-top:15px;
+  overflow-wrap:anywhere;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>𝕏 Twitter Mini Composer</h1>
+  <p>अपनी पोस्ट लिखें, अक्षर गिनें और कॉपी करें।</p>
+
+  <textarea id="post" maxlength="280"
+  placeholder="आज आप क्या कहना चाहते हैं?"></textarea>
+
+  <div class="counter">
+    <span id="count">0</span>/280 अक्षर
+  </div>
+
+  <button class="primary" onclick="copyPost()">
+    पोस्ट कॉपी करें
+  </button>
+
+  <button class="secondary" onclick="clearPost()">
+    साफ करें
+  </button>
+
+  <p id="message"></p>
+
+  <div class="preview">
+    <h3>पोस्ट प्रीव्यू</h3>
+    <p id="preview">आपकी पोस्ट यहाँ दिखाई देगी।</p>
+  </div>
+</div>
+
+<script>
+const post = document.getElementById("post");
+
+post.addEventListener("input", function(){
+  document.getElementById("count").textContent =
+    [...post.value].length;
+
+  document.getElementById("preview").textContent =
+    post.value || "आपकी पोस्ट यहाँ दिखाई देगी।";
+
+  document.getElementById("message").textContent = "";
+});
+
+async function copyPost(){
+  const message = document.getElementById("message");
+
+  if(!post.value.trim()){
+    message.textContent = "पहले अपनी पोस्ट लिखें!";
+    return;
+  }
+
+  try{
+    await navigator.clipboard.writeText(post.value);
+    message.textContent = "पोस्ट सफलतापूर्वक कॉपी हो गई! ✅";
+  }catch(error){
+    post.select();
+    message.textContent =
+      "पोस्ट चुन ली गई है। अब Copy दबाएँ।";
+  }
+}
+
+function clearPost(){
+  post.value = "";
+  document.getElementById("count").textContent = "0";
+  document.getElementById("preview").textContent =
+    "आपकी पोस्ट यहाँ दिखाई देगी।";
+  document.getElementById("message").textContent = "";
+}
+</script>
+</body>
+</html>
