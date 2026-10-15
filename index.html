@@ -1,309 +1,676 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hindi-English Mini Composer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<title>Mini Composer | X Post Editor</title>
 
-  <meta name="description"
-        content="Free Hindi-English Mini Composer. Write, copy, and share posts on X.">
+<style>
+* {
+  box-sizing: border-box;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+body {
+  margin: 0;
+  padding: 20px 12px;
+  background: #000;
+  color: #f4f4f5;
+  font-family: Arial, sans-serif;
+}
 
-    body {
-      margin: 0;
-      padding: 20px;
-      background: #f0f4f8;
-      color: #17202a;
-      font-family: Arial, sans-serif;
-    }
+.app {
+  max-width: 720px;
+  margin: auto;
+}
 
-    .container {
-      max-width: 650px;
-      margin: 30px auto;
-      padding: 24px;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-    }
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 15px 0 28px;
+}
 
-    h1 {
-      margin-top: 0;
-      text-align: center;
-      font-size: 27px;
-    }
+.logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: white;
+  color: black;
+  display: grid;
+  place-items: center;
+  font-size: 36px;
+  flex-shrink: 0;
+}
 
-    .subtitle {
-      text-align: center;
-      color: #667085;
-      margin-bottom: 24px;
-    }
+h1 {
+  font-size: 30px;
+  margin: 0 0 6px;
+}
 
-    label {
-      display: block;
-      margin: 16px 0 8px;
-      font-weight: bold;
-    }
+.subtitle {
+  color: #888;
+  margin: 0;
+  line-height: 1.6;
+}
 
-    textarea,
-    input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #d0d5dd;
-      border-radius: 10px;
-      font-size: 16px;
-      font-family: inherit;
-    }
+.card {
+  background: #101014;
+  border: 1px solid #303038;
+  border-radius: 24px;
+  padding: 22px;
+}
 
-    textarea {
-      min-height: 180px;
-      resize: vertical;
-      line-height: 1.6;
-    }
+label,
+.label {
+  display: block;
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
 
-    input:focus,
-    textarea:focus {
-      outline: 2px solid #84caff;
-      border-color: #1570ef;
-    }
+textarea,
+input {
+  width: 100%;
+  background: #000;
+  color: white;
+  border: 1px solid #303038;
+  border-radius: 18px;
+  padding: 18px;
+  font: inherit;
+  font-size: 17px;
+  outline: none;
+}
 
-    .counter {
-      text-align: right;
-      margin-top: 8px;
-      color: #667085;
-      font-size: 13px;
-    }
+textarea {
+  min-height: 220px;
+  resize: vertical;
+  line-height: 1.6;
+}
 
-    .buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 18px;
-    }
+textarea:focus,
+input:focus {
+  border-color: #1d9bf0;
+  box-shadow: 0 0 0 2px #1d9bf055;
+}
 
-    button {
-      border: none;
-      border-radius: 10px;
-      padding: 13px 10px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+::placeholder {
+  color: #73737c;
+}
 
-    button:active {
-      transform: scale(0.98);
-    }
+.counter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 28px;
+  color: #888;
+  font-size: 12px;
+}
 
-    .copy {
-      background: #1570ef;
-      color: white;
-    }
+#counter {
+  white-space: nowrap;
+  font-size: 15px;
+}
 
-    .xpost {
-      background: #111111;
-      color: white;
-    }
+.over {
+  color: #ff5555;
+}
 
-    .clear {
-      background: #fee4e2;
-      color: #b42318;
-    }
+.field {
+  margin-top: 25px;
+}
 
-    .sample {
-      background: #e0f2fe;
-      color: #075985;
-    }
+.hint {
+  color: #777;
+  font-size: 13px;
+  line-height: 1.6;
+}
 
-    .status {
-      min-height: 24px;
-      margin-top: 15px;
-      text-align: center;
-      color: #067647;
-      font-size: 14px;
-    }
+.upload {
+  border: 1px dashed #444;
+  border-radius: 20px;
+  padding: 28px 12px;
+  text-align: center;
+  cursor: pointer;
+  background: #090909;
+}
 
-    .note {
-      margin-top: 20px;
-      color: #667085;
-      font-size: 13px;
-      line-height: 1.6;
-    }
+.upload-icon {
+  width: 55px;
+  height: 55px;
+  background: #09233a;
+  color: #1d9bf0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  margin: 0 auto 14px;
+}
 
-    @media (max-width: 450px) {
-      body {
-        padding: 10px;
-      }
+.upload strong {
+  display: block;
+  margin-bottom: 10px;
+}
 
-      .container {
-        padding: 18px;
-        margin: 12px auto;
-      }
+.upload small {
+  color: #888;
+  line-height: 1.7;
+}
 
-      h1 {
-        font-size: 23px;
-      }
+#images {
+  display: none;
+}
 
-      .buttons {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.image-item {
+  position: relative;
+}
+
+.image-item img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.remove {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background: #222;
+  color: white;
+  padding: 5px 10px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.primary {
+  background: #1d9bf0;
+  color: white;
+}
+
+.secondary {
+  background: #29292f;
+  color: white;
+}
+
+.notice {
+  display: none;
+  background: #102719;
+  color: #a5f3b5;
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 15px;
+  overflow-wrap: anywhere;
+}
+
+.preview {
+  border-top: 1px solid #303038;
+  margin-top: 30px;
+  padding-top: 25px;
+}
+
+.preview h2 {
+  font-size: 23px;
+  margin-bottom: 20px;
+}
+
+.preview-card {
+  background: #08080a;
+  border: 1px solid #303038;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.avatar {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  background: white;
+  color: black;
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+}
+
+.profile-name {
+  font-weight: bold;
+}
+
+.handle {
+  color: #777;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+#previewText {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+
+#previewUrl {
+  color: #1d9bf0;
+  display: block;
+  margin-top: 10px;
+  overflow-wrap: anywhere;
+}
+
+#previewImages {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 12px;
+}
+
+#previewImages img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.empty {
+  color: #888;
+}
+
+.footer {
+  color: #666;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.7;
+  margin-top: 20px;
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 25px;
+  }
+
+  .card {
+    padding: 17px;
+  }
+
+  textarea {
+    min-height: 200px;
+  }
+
+  button {
+    padding: 13px 16px;
+  }
+}
+</style>
 </head>
 
 <body>
-  <main class="container">
+<main class="app">
 
-    <h1>✍️ Mini Composer</h1>
-
+<header class="header">
+  <div class="logo">𝕏</div>
+  <div>
+    <h1>Mini Composer</h1>
     <p class="subtitle">
-      हिंदी + English | Free Post Writer
+      Draft, preview, and share to X.<br>
+      पोस्ट लिखें, प्रीव्यू देखें और कॉपी करें।
     </p>
+  </div>
+</header>
 
-    <label for="postText">अपनी पोस्ट लिखें / Write your post</label>
+<section class="card">
 
-    <textarea
-      id="postText"
-      maxlength="10000"
-      placeholder="यहाँ हिंदी या English में लिखें...
+<label for="post">What's happening? / क्या कहना चाहते हैं?</label>
 
-Write your thoughts here..."
-      oninput="updateCounter()"
-    ></textarea>
+<textarea
+  id="post"
+  placeholder="Write your post... / अपनी पोस्ट यहाँ लिखें..."
+></textarea>
 
-    <div class="counter">
-      <span id="count">0</span> characters
+<div class="counter-row">
+  <span>
+    Links count as 23 characters on X.<br>
+    X पर लिंक 23 अक्षरों के गिने जाते हैं।
+  </span>
+  <span id="counter">0/280</span>
+</div>
+
+<div class="field">
+  <label for="website">Website URL / वेबसाइट लिंक</label>
+
+  <input
+    id="website"
+    type="text"
+    placeholder="example.com"
+  >
+
+  <p class="hint">
+    Optional. https:// is added automatically.<br>
+    वैकल्पिक है; https:// अपने आप जुड़ जाएगा।
+  </p>
+</div>
+
+<div class="field">
+  <div class="label">
+    Images / तस्वीरें
+    <span id="imageCount" style="float:right;color:#888;font-weight:normal">
+      0/4
+    </span>
+  </div>
+
+  <input
+    id="images"
+    type="file"
+    accept="image/jpeg,image/png,image/gif,image/webp"
+    multiple
+  >
+
+  <label for="images" class="upload">
+    <span class="upload-icon">▧＋</span>
+
+    <strong>
+      Tap to choose images / तस्वीरें चुनने के लिए टैप करें
+    </strong>
+
+    <small>
+      JPG, PNG, GIF or WEBP · Maximum 5 MB each<br>
+      JPG, PNG, GIF या WEBP · हर तस्वीर अधिकतम 5 MB
+    </small>
+  </label>
+
+  <div id="imageGrid" class="image-grid"></div>
+</div>
+
+<div class="actions">
+  <button id="copyBtn" class="primary" type="button">
+    Copy Post / पोस्ट कॉपी करें
+  </button>
+
+  <button id="clearBtn" class="secondary" type="button">
+    Clear / साफ़ करें
+  </button>
+</div>
+
+<div id="notice" class="notice"></div>
+
+<section class="preview">
+  <h2>Post Preview / पोस्ट प्रीव्यू</h2>
+
+  <div class="preview-card">
+
+    <div class="profile">
+      <div class="avatar">𝕏</div>
+
+      <div>
+        <div class="profile-name">Your Name / आपका नाम</div>
+        <div class="handle">@yourusername · Preview</div>
+      </div>
     </div>
 
-    <label for="hashtags">Hashtags (वैकल्पिक)</label>
-
-    <input
-      id="hashtags"
-      type="text"
-      placeholder="#Hindi #India #Technology"
-    >
-
-    <div class="buttons">
-
-      <button class="copy" onclick="copyPost()">
-        📋 Copy Post
-      </button>
-
-      <button class="xpost" onclick="postToX()">
-        𝕏 Post on X
-      </button>
-
-      <button class="sample" onclick="insertSample()">
-        ✨ Sample Post
-      </button>
-
-      <button class="clear" onclick="clearPost()">
-        🗑️ Clear
-      </button>
-
+    <div id="previewText" class="empty">
+      Your post will appear here.<br>
+      आपकी पोस्ट यहाँ दिखाई देगी।
     </div>
 
-    <div class="status" id="status" aria-live="polite"></div>
+    <a id="previewUrl" target="_blank" rel="noopener noreferrer"></a>
 
-    <p class="note">
-      यह एक स्वतंत्र HTML टूल है। किसी सर्वर या API की आवश्यकता नहीं है।
-      Copy Post से टेक्स्ट कॉपी करें। Post on X से X का पोस्ट कंपोज़र
-      खुलेगा, जहाँ आप पोस्ट को जाँचकर प्रकाशित कर सकते हैं।
-    </p>
+    <div id="previewImages"></div>
 
-  </main>
+  </div>
+</section>
 
-  <script>
-    const postText = document.getElementById("postText");
-    const hashtags = document.getElementById("hashtags");
-    const count = document.getElementById("count");
-    const status = document.getElementById("status");
+</section>
 
-    function updateCounter() {
-      count.textContent = postText.value.length;
-    }
+<p class="footer">
+  Mini Composer · यह टूल पोस्ट तैयार करता है।<br>
+  पोस्ट प्रकाशित करने के लिए X पर अलग से जाएँ।
+</p>
 
-    function getFullPost() {
-      const text = postText.value.trim();
-      const tags = hashtags.value.trim();
+</main>
 
-      if (text && tags) {
-        return text + "\n\n" + tags;
+<script>
+const post = document.getElementById("post");
+const website = document.getElementById("website");
+const counter = document.getElementById("counter");
+const imageInput = document.getElementById("images");
+const imageGrid = document.getElementById("imageGrid");
+const imageCount = document.getElementById("imageCount");
+const previewText = document.getElementById("previewText");
+const previewUrl = document.getElementById("previewUrl");
+const previewImages = document.getElementById("previewImages");
+const notice = document.getElementById("notice");
+
+let selectedImages = [];
+
+function normalizeUrl(value) {
+  let url = value.trim();
+
+  if (!url) return "";
+
+  if (!/^https?:\/\//i.test(url)) {
+    url = "https://" + url;
+  }
+
+  return url;
+}
+
+function countCharacters(text) {
+  const pattern =
+    /(?:https?:\/\/)?(?:[\w-]+\.)+[a-z]{2,}(?:\/[^\s]*)?/gi;
+
+  let total = 0;
+  let last = 0;
+
+  for (const match of text.matchAll(pattern)) {
+    total += [...text.slice(last, match.index)].length + 23;
+    last = match.index + match[0].length;
+  }
+
+  total += [...text.slice(last)].length;
+
+  return total;
+}
+
+function updatePreview() {
+  const text = post.value;
+  const count = countCharacters(text);
+
+  counter.textContent = count + "/280";
+  counter.classList.toggle("over", count > 280);
+
+  previewText.textContent =
+    text || "Your post will appear here. / आपकी पोस्ट यहाँ दिखाई देगी।";
+
+  previewText.classList.toggle("empty", !text);
+
+  const url = normalizeUrl(website.value);
+
+  if (url) {
+    try {
+      const parsed = new URL(url);
+
+      if (parsed.protocol === "https:" || parsed.protocol === "http:") {
+        previewUrl.href = parsed.href;
+        previewUrl.textContent = website.value.trim().replace(/^https?:\/\//i, "");
+        previewUrl.style.display = "block";
+      } else {
+        previewUrl.style.display = "none";
       }
+    } catch {
+      previewUrl.style.display = "none";
+    }
+  } else {
+    previewUrl.style.display = "none";
+  }
+}
 
-      return text || tags;
+function showNotice(message, error = false) {
+  notice.textContent = message;
+  notice.style.display = "block";
+  notice.style.background = error ? "#321515" : "#102719";
+  notice.style.color = error ? "#ffb4b4" : "#a5f3b5";
+}
+
+function renderImages() {
+  imageGrid.replaceChildren();
+  previewImages.replaceChildren();
+
+  imageCount.textContent = selectedImages.length + "/4";
+
+  selectedImages.forEach((file, index) => {
+    const item = document.createElement("div");
+    item.className = "image-item";
+
+    const thumb = document.createElement("img");
+    thumb.src = URL.createObjectURL(file);
+    thumb.alt = "Selected image " + (index + 1);
+
+    const remove = document.createElement("button");
+    remove.className = "remove";
+    remove.type = "button";
+    remove.textContent = "×";
+
+    remove.onclick = () => {
+      selectedImages.splice(index, 1);
+      renderImages();
+    };
+
+    item.append(thumb, remove);
+    imageGrid.append(item);
+
+    const preview = document.createElement("img");
+    preview.src = URL.createObjectURL(file);
+    preview.alt = "Post image " + (index + 1);
+
+    previewImages.append(preview);
+  });
+}
+
+post.addEventListener("input", updatePreview);
+website.addEventListener("input", updatePreview);
+
+imageInput.addEventListener("change", () => {
+  for (const file of imageInput.files) {
+    if (selectedImages.length >= 4) {
+      showNotice(
+        "Maximum 4 images allowed. / अधिकतम 4 तस्वीरें चुन सकते हैं।",
+        true
+      );
+      break;
     }
 
-    async function copyPost() {
-      const text = getFullPost();
+    const allowed = [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "image/webp"
+    ];
 
-      if (!text) {
-        status.textContent = "पहले अपनी पोस्ट लिखें!";
-        return;
-      }
-
-      try {
-        await navigator.clipboard.writeText(text);
-        status.textContent = "✅ पोस्ट कॉपी हो गई!";
-      } catch (error) {
-        postText.focus();
-        postText.select();
-
-        try {
-          const success = document.execCommand("copy");
-
-          status.textContent = success
-            ? "✅ पोस्ट कॉपी हो गई!"
-            : "टेक्स्ट चुन लिया गया है। अब Copy करें।";
-        } catch (e) {
-          status.textContent =
-            "टेक्स्ट चुन लिया गया है। अब Copy करें।";
-        }
-      }
+    if (!allowed.includes(file.type)) {
+      showNotice(
+        "Unsupported image format. / तस्वीर का फ़ॉर्मैट सही नहीं है।",
+        true
+      );
+      continue;
     }
 
-    function postToX() {
-      const text = getFullPost();
-
-      if (!text) {
-        status.textContent = "पहले अपनी पोस्ट लिखें!";
-        return;
-      }
-
-      const url =
-        "https://twitter.com/intent/tweet?text=" +
-        encodeURIComponent(text);
-
-      window.open(url, "_blank", "noopener,noreferrer");
-
-      status.textContent =
-        "X खुल गया है। अपनी पोस्ट जाँचें और प्रकाशित करें।";
+    if (file.size > 5 * 1024 * 1024) {
+      showNotice(
+        "Image must be under 5 MB. / तस्वीर 5 MB से छोटी होनी चाहिए।",
+        true
+      );
+      continue;
     }
 
-    function insertSample() {
-      postText.value =
-        "नमस्ते दोस्तों! 👋\n\n" +
-        "यह मेरा Hindi-English Mini Composer है। " +
-        "अब हिंदी और English में पोस्ट लिखना आसान है। 🚀\n\n" +
-        "आपको यह टूल कैसा लगा?";
+    selectedImages.push(file);
+  }
 
-      hashtags.value = "#Hindi #India #Technology";
+  imageInput.value = "";
+  renderImages();
+});
 
-      updateCounter();
-      status.textContent = "✨ Sample post तैयार है!";
-    }
+document.getElementById("copyBtn").addEventListener("click", async () => {
+  const text = post.value.trim();
+  const url = normalizeUrl(website.value);
+  const fullPost = [text, url].filter(Boolean).join("\n\n");
 
-    function clearPost() {
-      postText.value = "";
-      hashtags.value = "";
+  if (!fullPost) {
+    showNotice(
+      "Please write a post first. / पहले पोस्ट लिखें।",
+      true
+    );
+    return;
+  }
 
-      updateCounter();
-      status.textContent = "पोस्ट साफ़ कर दी गई है।";
-      postText.focus();
-    }
-  </script>
+  if (countCharacters(fullPost) > 280) {
+    showNotice(
+      "Post is over 280 characters. / पोस्ट 280 अक्षरों से लंबी है।",
+      true
+    );
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(fullPost);
+
+    showNotice(
+      "Post copied! / पोस्ट कॉपी हो गई! तस्वीरें X पर अलग से अपलोड करें।"
+    );
+  } catch {
+    const temp = document.createElement("textarea");
+    temp.value = fullPost;
+    document.body.appendChild(temp);
+    temp.select();
+
+    const success = document.execCommand("copy");
+    temp.remove();
+
+    showNotice(
+      success
+        ? "Post copied! / पोस्ट कॉपी हो गई!"
+        : "Please copy the text manually. / टेक्स्ट खुद कॉपी करें।",
+      !success
+    );
+  }
+});
+
+document.getElementById("clearBtn").addEventListener("click", () => {
+  post.value = "";
+  website.value = "";
+  selectedImages = [];
+  imageInput.value = "";
+  notice.style.display = "none";
+
+  renderImages();
+  updatePreview();
+});
+
+updatePreview();
+</script>
 
 </body>
 </html>
